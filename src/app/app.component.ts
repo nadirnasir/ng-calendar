@@ -1,3 +1,7 @@
+// https://fullcalendar.io/docs/duration
+// https://www.npmjs.com/package/ng-fullcalendar
+// https://github.com/Jamaks/ng-fullcalendar-demo
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CalendarComponent } from 'ng-fullcalendar';
 import { Options } from 'fullcalendar';
@@ -6,9 +10,9 @@ import { EventSesrvice } from './event.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: [ './app.component.css' ]
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit  {
+export class AppComponent implements OnInit {
   calendarOptions: Options;
   displayEvent: any;
   events = null;
@@ -17,14 +21,27 @@ export class AppComponent implements OnInit  {
 
   ngOnInit() {
     this.calendarOptions = {
-      editable: true,
+      defaultView: 'agendaWeek',
+      editable: false,
       eventLimit: false,
       header: {
         left: 'prev,next today',
         center: 'title',
         right: 'month,agendaWeek,agendaDay,listMonth'
       },
-      events: []
+      events: [],
+      businessHours: [ // specify an array instead
+        {
+          dow: [1, 2, 3, 4, 5], // Monday, Tuesday, Wednesday
+          start: '08:15', // 8am
+          end: '17:00' // 6pm
+        },
+        {
+          dow: [6], // Thursday, Friday
+          start: '10:00', // 10am
+          end: '16:00' // 4pm
+        }
+      ]
     };
   }
   loadevents() {
